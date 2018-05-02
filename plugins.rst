@@ -19,12 +19,12 @@ Plugins are written in go. You will need golang (https://golang.org) to be able 
 
 Writing plugins should be as easy as possible. That's why we offer you a skeleton that you can copy and paste into your editor and start writing your plugin from there.
 
-Let's start with getting copying the skeleton plugin code available in the official triggerFS plugins repository at https://github.com/triggerfsio/plugins.
+Let's start with copying the skeleton plugin code available in the official triggerFS plugins repository at https://github.com/triggerfsio/plugins.
 
 If you haven't installed go please do so first.
 
 
-1. Go get the repository via ``go get``:
+1. Go get the repository with ``go get``:
 
 .. code-block:: bash
 
@@ -94,7 +94,9 @@ We then notify the client that we will write now. Then we do the actual writing 
 
    pluginspath = "/home/hp/mynewplugin"
 
-**Note**: you must use absolute paths in your toml file. $HOME/mynewplugin would not work here.
+.. note::
+
+   You must use absolute paths in your toml file. $HOME/mynewplugin would not work here.
 
 6. Make a request to the service and specify your own plugin:
 

@@ -25,7 +25,7 @@ Create a new worker
    (team1) hp@example.com$ configure# show workers
      id | identity |      description       |    state     |                token                 |   owner   |            created            |            updated             
    +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
-      6 | demo01   |                        | DISCONNECTED | 9b1bd278-e645-4eec-bffb-0587ad84534e | hpekdemir | Mon, 30 Apr 2018 18:45:30 UTC | Mon, 30 Apr 2018 18:45:30 UTC  
+      6 | demo01   |                        | DISCONNECTED | 9b1bd278-e645-4eec-bffb-0587ad84534e | hp        | Mon, 30 Apr 2018 18:45:30 UTC | Mon, 30 Apr 2018 18:45:30 UTC  
    +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
    (1 rows)
 
@@ -76,7 +76,7 @@ A quick look in the cli tells us that the worker is online:
    (team1) hp@example.com$ configure# show workers
      id | identity |      description       |    state     |                token                 |   owner   |            created            |            updated             
    +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
-      6 | demo01   |                        | ONLINE       | 9b1bd278-e645-4eec-bffb-0587ad84534e | hpekdemir | Mon, 30 Apr 2018 18:45:30 UTC | Mon, 30 Apr 2018 19:03:01 UTC  
+      6 | demo01   |                        | ONLINE       | 9b1bd278-e645-4eec-bffb-0587ad84534e | hp        | Mon, 30 Apr 2018 18:45:30 UTC | Mon, 30 Apr 2018 19:03:01 UTC  
    +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
    (4 rows)
 
@@ -171,7 +171,7 @@ Note that ``command/command`` is the actual path to the directory where the plug
    (team1) hp@example.com$ configure# show triggers
       id |    name     | description |     plugin      | hits |   owner   | visibility |            created            |            updated             
     +----+-------------+-------------+-----------------+------+-----------+------------+-------------------------------+-------------------------------+
-       2 | demotrigger |             | command/command |    0 | hpekdemir | local      | Mon, 30 Apr 2018 18:53:54 UTC | Mon, 30 Apr 2018 18:53:54 UTC  
+       2 | demotrigger |             | command/command |    0 | hp        | local      | Mon, 30 Apr 2018 18:53:54 UTC | Mon, 30 Apr 2018 18:53:54 UTC  
     +----+-------------+-------------+-----------------+------+-----------+------------+-------------------------------+-------------------------------+
    (1 rows)
 
@@ -288,7 +288,7 @@ A look at the trigger in our cli will show that it got one hit:
    (team1) hp@example.com$ configure# show triggers
      id |    name     | description |     plugin      | hits |   owner   | visibility |            created            |            updated             
    +----+-------------+-------------+-----------------+------+-----------+------------+-------------------------------+-------------------------------+
-      2 | demotrigger |             | command/command |    1 | hpekdemir | local      | Mon, 30 Apr 2018 18:53:54 UTC | Mon, 30 Apr 2018 19:22:52 UTC  
+      2 | demotrigger |             | command/command |    1 | hp        | local      | Mon, 30 Apr 2018 18:53:54 UTC | Mon, 30 Apr 2018 19:22:52 UTC  
    (1 rows)
    
    Time: 177.43962ms
@@ -308,7 +308,7 @@ Plugins
 
 The triggerFS core plugins are available at https://github.com/triggerfsio/plugins.
 
-Go get them (pun intended) with ``go get``:
+Go get them with ``go get``:
 
 .. code-block:: bash
 
