@@ -7,7 +7,10 @@ Those plugins need a place where they can be listed to the public, so everyone c
 
 Plugins are small pieces of code, doing one thing and doing it well. We want to build as many plugins as possible for any kind of job. You can host them on github and link your repository in the triggerFS marketplace, making it accessible within the triggerFS app. Our goal is to provide you with tons of plugins with the help of the community in the near future.
 
-The marketplace is in development right now and will be launched soon.
+
+.. note::
+
+   The marketplace is in development right now and will be launched soon.
 
 
 How The Marketplace Works

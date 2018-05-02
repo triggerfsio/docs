@@ -5,7 +5,8 @@ Introduction
 
    triggerFS is in beta-testing right now. The pricing plan is disabled and all signups are made with the free-tier with **no limitations** and **all features enabled**. Enjoy!
 
-Welcome to triggerFS.
+Welcome to triggerFS
+--------------------
 
 triggerFS is a distributed, realtime message passing and trigger system. triggerFS enables you to build distributed systems and do realtime messaging in a service-oriented fashion. It is made up of four modules:
 
@@ -15,6 +16,12 @@ triggerFS is a distributed, realtime message passing and trigger system. trigger
 - fs
 
 Each one of these modules play a key role in your triggerFS environment.
+
+Media
+-----
+
+A screencast/presentation video will follow soon.
+
 
 Modules
 #######
