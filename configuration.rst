@@ -6,7 +6,11 @@ We will start with the cli module since we have nothing configured to run the ot
 
 We will first start by creating a worker, fire up the worker, create a service and a trigger.
 
-*Note*: the cli is pretty much self-explanatory and its help menu will have information on what each command is doing. You can access the help menu by invoking ``help`` in both ``run`` and ``configure`` modes.
+.. note::
+
+   The ``cli`` module's syntax is similar to Juniper's cli. The syntax and commands available in the cli are pretty much self-explanatory and its help menu will have information on what each command is doing. You can access the help menu by invoking ``help`` in both ``run`` and ``configure`` modes.
+
+In this configuration example we assume that we are logged in as the user "hp" in the team "team1". The prompt of the cli will indicate this.
 
 Workers
 #######

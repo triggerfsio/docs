@@ -92,10 +92,10 @@ Replace your credentials in the main section of the configuration file:
    [main]
    # team name for login
    team = "myawesometeam"
-   # identity (email address) for login
-   identity = "demo@example.com"
+   # identity for login
+   identity = "myidentity"
    # password for login
-   secret = "secret"
+   secret = "password"
    ### MAIN SECTION END
 
 We will mention the configuration file a few more times in the Configuration section of this documentation.
