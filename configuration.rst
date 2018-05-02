@@ -55,9 +55,9 @@ The naming of the subsection is simple: workers.$team.$identity. Then specify th
    token = "9b1bd278-e645-4eec-bffb-0587ad84534e"
    ...
 
-.. note::
+.. hint::
 
-   **Hint**: Workers only need the [workers] section in the config file. No need for credentials in the [main] section
+   Workers only need the [workers] section in the config file. No need for credentials in the [main] section
 
 Services
 ########
@@ -237,7 +237,9 @@ Let's make a request to our new service with the client module. We will define o
 
 The response came from the server with the worker running on called ``demo01`` and the plugin ``command/command`` and the output of the ``uptime`` command.
 
-Hint: The client module also reads stdin, so you can skip the ``-command`` flag and echo uptime piped to the client:
+.. hint::
+
+   The client module also reads stdin, so you can skip the ``-command`` flag and echo uptime piped to the client:
 
 .. code-block:: bash
 
