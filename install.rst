@@ -42,7 +42,8 @@ Download install.sh from the triggerFS packages repository or clone the whole re
 
 Signup
 ------
-Choose "Signup" from the menu and follow the instructions of the installer.
+Signing up is really simple and takes less than a minute. Just choose "Signup" from the menu and follow the instructions of the installer.
+You will be notified with an email if you have successfully signed up.
 
 Team creation
 -------------

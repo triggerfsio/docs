@@ -1,6 +1,12 @@
 Core Plugins
 ############
 
+The core plugins are the official plugins written and maintained by the triggerFS team. They are well tested and known to be bug-free and working.
+
+We will include more and more plugins into the core plugins repository, so we can have a nice set of plugins to work with.
+
+We hope that the rest will be done by the community with their great ideas and great plugins shared to the public.
+
 Please refer to `Configuration#Plugins <configuration.html#plugins>`_ to see how to get and configure the triggerFS core plugins.
 
 
@@ -34,6 +40,41 @@ If you haven't installed go please do so first.
 
 3. Write your own function in the ``Init()`` method of the plugin.
 
+Let's say we want to write the payload to a file and return the message "file has been written." back to the client.
+We also want to notify the client in realtime that we are about to write to that file.
+
+.. code-block:: go
+
+        // Init implements the triggerfs plugin Interface
+        func (ap *AwesomePlugin) Init(message *plugins.Message, resp *plugins.Response) error {
+                // open a channel for realtime communication back to the client.
+                err := ap.Plugin.Open(message.Socket)
+                if err != nil {
+                        return err
+                }
+                // IMPORTANT: remember to defer close the channel or you will get timeouts!
+                defer ap.Plugin.Close()
+
+                data := message.Command[0]
+                filepath := message.Args["filepath"]
+
+                // now implement your plugin here
+                ap.Plugin.Send(fmt.Sprintf("Writing payload: %s to file %s now", data, filepath))
+                err = ioutil.WriteFile(filepath, []byte(data+"\n"), 0644)
+                if err != nil {
+                        log.Printf("failed to write to file: %s\n", err)
+                }
+
+                // and finally set the exitcode and a final message on resp
+                resp.ExitCode = 0
+                resp.Output = []string{"file has been written."}
+
+                return nil
+        }
+
+We have defined data and filepath here. data is the command being sent by the client with the ``-command`` flag or stdin and filepath is the plugin argument specified by the client.
+We then notify the client that we will write now. Then we do the actual writing to the file. And finally we return from the function after we set our response output (that the file has been written).
+
 4. Build your plugin with go. Optionally give it an output name ``myplugin``:
 
 .. code-block:: bash
@@ -53,4 +94,25 @@ If you haven't installed go please do so first.
 
 .. code-block:: bash
 
-   ./triggerfs-client -service myworker_or_service -plugin myplugin -timeout 3s
+   $ ./triggerfs-client -service hp01 -plugin myplugin -timeout 3s -command "hello world" -args filepath=/tmp/myfile.txt
+   2018/05/02 00:52:48 Sending message to service hp01
+   [myplugin@hp01] Writing payload: hello world to file /tmp/myfile.txt now
+   [myplugin@hp01] file has been written.
+   
+   Exit code: 0
+   Total messages: 2
+   Time ran: 118.079784ms
+   
+   $ 
+
+If we cat the file /tmp/myfile.txt we see the following:
+
+.. code-block:: bash
+
+   $ cat /tmp/myfile.txt
+   hello world
+   $
+
+
+Congratulations! You have just written your first triggerFS plugin. Of course this one was really simple. A plugin can vary from simple to super-complex stuff.
+That's why plugins enable you to do so many things.
