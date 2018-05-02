@@ -58,16 +58,22 @@ We also want to notify the client in realtime that we are about to write to that
                 data := message.Command[0]
                 filepath := message.Args["filepath"]
 
+                var output string
                 // now implement your plugin here
                 ap.Plugin.Send(fmt.Sprintf("Writing payload: %s to file %s now", data, filepath))
                 err = ioutil.WriteFile(filepath, []byte(data+"\n"), 0644)
                 if err != nil {
                         log.Printf("failed to write to file: %s\n", err)
+                        ap.Plugin.Send("failed to write to file.")
+                        output = "failed to write to file."
+                        return err
                 }
+
+                output = "file has been written."
 
                 // and finally set the exitcode and a final message on resp
                 resp.ExitCode = 0
-                resp.Output = []string{"file has been written."}
+                resp.Output = []string{output}
 
                 return nil
         }
