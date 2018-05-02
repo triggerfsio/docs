@@ -9,11 +9,15 @@ We will first start by creating a worker, fire up the worker, create a service a
 .. note::
 
    The ``cli`` module's syntax is similar to Juniper's cli. The syntax and commands available in the cli are pretty much self-explanatory and its help menu will have information on what each command is doing. You can access the help menu by invoking ``help`` in both ``run`` and ``configure`` modes.
+   
+   The cli also has autocompletion of words. So use <TAB><TAB> (like you would do in your shell) to type fast and complete worker identities, service names, etc.
 
 In this configuration example we assume that we are logged in as the user "hp" in the team "team1". The prompt of the cli will indicate this.
 
 Workers
 #######
+
+First we will start with creating a worker so we can run it on a server.
 
 Create a new worker
 -------------------
@@ -35,59 +39,36 @@ Create a new worker
 Update configuration file
 -------------------------
 
+Now we take the identity and token of the newly created worker and put it into our toml configuration file.
+
+The naming of the subsection is simple: workers.$team.$identity. Then specify the token under that subsection with a key named "token".
+
 .. code-block:: bash
 
    ...
    [workers]
    # path to plugins folder
-   pluginspath = "/home/hp/git/triggerfsio/plugins/plugins"
+   pluginspath = "/home/hp/gocode/src/github.com/triggerfsio/plugins/plugins"
    
    # subsections of [workers] section identified by identities prefixed with "workers."
    [workers.team1.demo01]
    token = "9b1bd278-e645-4eec-bffb-0587ad84534e"
    ...
 
+.. note::
 
-Start the worker
-----------------
-
-Let's start the worker on any server. Remember to deploy the toml configuration file to the server.
-
-**Hint**: Workers only need the [workers] section in the config file. No need for credentials in the [main] section
-
-.. code-block:: bash
-
-   hp@localpc $ ./triggerfs-worker -identity demo01 -debug true
-   2018/04/30 21:03:01 I: connecting to broker at tcp://triggerfs.io:5555...
-   2018/04/30 21:03:01 I: trying to connect recv socket to broker
-   2018/04/30 21:03:01 I: trying to connect send socket to broker
-   2018/04/30 21:03:02 I: received BROKER_ACCEPTED from broker for worker socket - Connected
-   2018/04/30 21:03:02 I: Found service demoservice. Announcing it to broker.
-   2018/04/30 21:03:05 I: received HEARTBEAT for worker socket from broker.
-   2018/04/30 21:03:07 I: received HEARTBEAT for worker socket from broker.
-   2018/04/30 21:03:10 I: received HEARTBEAT for worker socket from broker.
-
-Notice how the worker has recognized that it is attached to the service ``demoservice`` and announced it to the broker. Ready to listen on it.
-A quick look in the cli tells us that the worker is online:
-
-.. code-block:: bash
-
-   (team1) hp@example.com$ configure
-   (team1) hp@example.com$ configure# show workers
-     id | identity |      description       |    state     |                token                 |   owner   |            created            |            updated             
-   +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
-      6 | demo01   |                        | ONLINE       | 9b1bd278-e645-4eec-bffb-0587ad84534e | hp        | Mon, 30 Apr 2018 18:45:30 UTC | Mon, 30 Apr 2018 19:03:01 UTC  
-   +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
-   (4 rows)
-
-   Time: 33.375014ms
-   (team1) hp@example.com$ configure#  
-
-
-**Important**: Remember to have the command plugin installed on the server where the worker is running. Have a look at Plugins_ for more information.
+   **Hint**: Workers only need the [workers] section in the config file. No need for credentials in the [main] section
 
 Services
 ########
+
+Until now the worker is already available under the service name "demo01". Remember that a worker identity automatically becomes a service in triggerFS.
+
+Since we want to make use of a trigger file, we need to go a step further and create a real service so we can attach our worker to it.
+
+.. note::
+
+   trigger-files only work with real services. Workers cannot be attached to a trigger file.
 
 Create a new service
 --------------------
@@ -122,6 +103,48 @@ Attach workers
 
    Time: 51.229509ms
    (team1) hp@example.com$ configure#  
+
+
+.. note::
+
+   Notice how the cli is telling us to let any newly added workers to reannounce their services. Since the worker we have just created never ran, it will automatically announce ``demoservice`` on startup.
+
+Start the worker
+----------------
+
+Let's start the worker on any server. Remember to deploy the toml configuration file to the server.
+
+.. code-block:: bash
+
+   hp@localpc $ ./triggerfs-worker -identity demo01 -debug true
+   2018/04/30 21:03:01 I: connecting to broker at tcp://triggerfs.io:5555...
+   2018/04/30 21:03:01 I: trying to connect recv socket to broker
+   2018/04/30 21:03:01 I: trying to connect send socket to broker
+   2018/04/30 21:03:02 I: received BROKER_ACCEPTED from broker for worker socket - Connected
+   2018/04/30 21:03:02 I: Found service demoservice. Announcing it to broker.
+   2018/04/30 21:03:05 I: received HEARTBEAT for worker socket from broker.
+   2018/04/30 21:03:07 I: received HEARTBEAT for worker socket from broker.
+   2018/04/30 21:03:10 I: received HEARTBEAT for worker socket from broker.
+
+Notice how the worker has recognized that it is attached to the service ``demoservice`` and announced it to the broker. Ready to listen on it.
+A quick look in the cli tells us that the worker is online:
+
+.. code-block:: bash
+
+   (team1) hp@example.com$ configure
+   (team1) hp@example.com$ configure# show workers
+     id | identity |      description       |    state     |                token                 |   owner   |            created            |            updated             
+   +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
+      6 | demo01   |                        | ONLINE       | 9b1bd278-e645-4eec-bffb-0587ad84534e | hp        | Mon, 30 Apr 2018 18:45:30 UTC | Mon, 30 Apr 2018 19:03:01 UTC  
+   +----+----------+------------------------+--------------+--------------------------------------+-----------+-------------------------------+-------------------------------+
+   (4 rows)
+
+   Time: 33.375014ms
+   (team1) hp@example.com$ configure#  
+
+.. attention::
+
+   **Important**: Remember to have the command plugin installed on the server where the worker is running. Have a look at Plugins_ for more information.
 
 
 Trigger
@@ -164,7 +187,7 @@ Since a trigger is just a set of definitions to what shall happen if the trigger
    (team1) hp@example.com$ configure#  
    
 Now we've defined that this trigger shall route the messages to the service called ``demoservice`` (where the worker demo01 sits behind and listens) and that the plugin command/command should be used.
-Note that ``command/command`` is the actual path to the directory where the plugin (binary) is located. Since the pluginspath in the configuration file is configured as ``/home/hp/git/triggerfsio/plugins/plugins`` it looks for a binary in ``/home/hp/git/triggerfsio/plugins/plugins/command/`` named ``command``.
+Note that ``command/command`` is the actual path to the directory where the plugin (binary) is located. Since the pluginspath in the configuration file is configured as ``/home/hp/gocode/src/github.com/triggerfsio/plugins/plugins`` it looks for a binary in ``/home/hp/gocode/src/github.com/triggerfsio/plugins/plugins/command/`` named ``command``.
 
 .. code-block:: bash
 
@@ -302,9 +325,13 @@ This was one configuration flow in its simplest form for a complete setup of a t
 We have created a worker, bound it to a service, created a trigger with a specified set of rules and executed a request in both ways with the client and the fs module.
 
 
-=======
+
 Plugins
-=======
+#######
+
+Plugins are binaries written and compiled in go. Since triggerFS uses zmq for its socket communication, you need to install libzmq3.
+
+This is only necessary if you want to build the plugin yourself. The triggerFS marketplace later will have binaries pre-built (statically linked, so you don't need any dependencies) for you (beside the available source code of the plugin).
 
 The triggerFS core plugins are available at https://github.com/triggerfsio/plugins.
 
@@ -314,7 +341,26 @@ Go get them with ``go get``:
 
    go get github.com/triggerfsio/plugins
 
-Then switch to the folder of the plugin you want to build:
+.. note::
+
+   The core plugins currently come without a pre-built binary. We will save this feature for later when we have launched the marketplace.
+
+   For now, you **have to** build the core plugins yourself. If you are experienced with docker, you can also make use of the golang docker file which comes with golang already installed.
+   In this example we will assume that you have installed golang and libzmq3-dev on your machine.
+
+Dependencies
+------------
+
+If you want to build a plugin you need to have installed libzmq3 and its developer files. Install it with:
+
+.. code-block:: bash
+
+   apt-get install libzmq3-dev
+
+Build
+-----
+
+Now switch to the folder of the plugin you want to build:
 
 .. code-block:: bash
 
