@@ -371,8 +371,8 @@ Now switch to the folder of the plugin you want to build:
    hp@localpc ~/gocode/src/github.com/triggerfsio/plugins/plugins/command $ go build command.go 
    hp@localpc ~/gocode/src/github.com/triggerfsio/plugins/plugins/command $ ll
    total 8.2M
-   -rwxrwxr-x 1 hasan hasan 8.2M Apr 30 21:33 command*
-   -rw-rw-r-- 1 hasan hasan 2.3K Apr  4 00:58 command.go
+   -rwxrwxr-x 1 hp hp 8.2M Apr 30 21:33 command*
+   -rw-rw-r-- 1 hp hp 2.3K Apr  4 00:58 command.go
    hp@localpc ~/gocode/src/github.com/triggerfsio/plugins/plugins/command $ 
 
 Now you can point your plugins folder to this directory (in your toml configuration file under section ``[workers]``):
