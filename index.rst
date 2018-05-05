@@ -1,6 +1,6 @@
 .. title:: triggerFS Documentation
 
-.. image:: _static/img/triggerfs_logo.png
+.. image:: _static/img/triggerfs_logo.jpg
 
 .. toctree::
    :maxdepth: 2
