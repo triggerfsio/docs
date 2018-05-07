@@ -1,41 +1,23 @@
-Why triggerFS?
-##############
+Introduction
+------------
 
-TriggerFS is here to help you with the right tool. We don't want to invent anything new, we want to take already existing parts and put them together to build a system which can deliver the experience many people are looking for when:
+You can do a lot with triggerFS. That's why we want to give you some examples and use cases. Hopefully you will find enough information here to use triggerFS the way it fits your needs.
 
-- there is a new problem to be solved
-- building distributed systems can actually be tricky
-- suddenly automating things becomes relevant
-- communication across boundaries is necessary but firewalls are in your way
-- tasks need to be outsourced to other systems
-- tasks need to be scheduled
-- periodic tasks need to be run
-- geo-replication is a topic
-- a "serverless" design is taken into consideration
-- lambda functions on own servers are needed
-- fire&forget-style events could be needed
-- wanting a central place where everything can be run (triggered) from
-
-Benefits
---------
-
-triggerFS offers you one more way to access your server or services on that server.
-If ssh is the door to get into your server, think about triggerFS as a door to access various, selected services on that server.
-
-triggerFS' ``fs`` module also helps to enable M2M (machine-to-machine) communication on embedded devices. Since writing to files is a cheap operation, 
-embedded devices with limited resources can do socket communication easily with triggerFS.
-
-By inviting other triggerFS users into your team you can collaborate with each other and share resources within the team.
-For example: Different universities can come together and share their servers to do data crunching or data analysis.
-
-By joining other teams you can share your services team-wide with other users of that team. This way you can make your service accessable only for a set of users.
-
-By making your service public you can offer your service to the whole world. People can then access your services either with the triggerFS ``client`` module or 
-the HTTP/broker gateway via HTTP to make requests to your service.
+We do have a screencast where we show a complete set up of two workers with one service in front of it and task execution with the help of the `command` core plugin.
 
 
-Examples
-########
+Media
+-----
+
+.. raw:: html
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe src="https://www.youtube.com/embed/vvfowPHD_7s" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+    </div>
+
+
+Use Cases
+#########
 
 Scenario 1 - Logging
 --------------------
@@ -55,7 +37,7 @@ Scenario 3 - Lambda functions
 -----------------------------
 
 You want to use a lambda function in a serverless way. Your application code reaches a point where it has to send an SMS to a user. You make use of the client or the HTTP/broker gateway to send a request to your service and use a plugin which uses twilio as an SMS provider.
-You provide your twilio api key and api secret with the ``-args`` flag of the client module and a string. The call returns with either a success or an error and your application code continues accordingly.
+You provide your Twilio api key and api secret with the ``-args`` flag of the client module and a string. The call returns with either a success or an error and your application code continues accordingly.
 
 Scenario 4 - A call back service
 --------------------------------
@@ -71,3 +53,32 @@ That trigger-file is defined in such a way that every write to that file will tr
 
 The list goes on and on. The opportunities to use triggerFS are countless. Feel free to come up with your own ideas on how to use triggerFS.
 And also feel free to tell us your story on how you use triggerFS in your environment. Drop us an email at feedback@triggerfs.io.
+
+
+Examples
+########
+
+- Mass System Upgrades
+  Given we have 100 servers with Ubuntu/Debian, we deploy one worker on each of them and bind them to multiple services (eg. divided by location/rack/dc). We use the `command` plugin to upgrade the systems:
+
+  .. code:: bash
+
+     ./triggerfs-client -service dc1 -timeout 1h -plugin command -command 'apt-get update && apt-get upgrade'
+
+
+- Telegram Bot
+  Given we have a telegram group with a bot inside, we deploy one worker on a server/vps and mount our trigger files on the same server with the ``triggerfs`` module.
+  We write a telegram plugin to listen on that group and whenever a message is sent to the bot we write into a trigger-file which would result in sending a message to a certain service.
+  We send back a message to the group that the file has been written.
+
+
+- Suppose Twilio would be using triggerFS. Given that the Twilio team offers a public service to registered users for sending SMS: We have an account at Twilio and want to send an SMS to a friend.
+
+  We want to use this public service and invoke the following command:
+
+  .. code:: bash
+
+     ./triggerfs-client -service twilio/api -plugin sms -command 'Hey buddy, can we meet at 3pm today?' -args recipient=0123456789 -args apikey=$MYAPIKEY_BASH_ENV -args apisecret=$MYAPISECRET_BASH_ENV
+
+
+  Note the service syntax for public services here. We specify the team name and the service name separated by a slash.

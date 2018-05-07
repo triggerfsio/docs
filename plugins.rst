@@ -1,3 +1,30 @@
+What is a Plugin
+################
+
+A plugin is a tiny binary (written and compiled in go) which does one thing and does it well. A plugin could be anything:
+
+- compute something
+- filter, grep, grok, sort or manipulate data
+- write to a file
+- log to a file
+- forward a message
+- read logs
+- collect metrics (eg. send metrics to graphite)
+- just echo back the received message
+- monitor the server the worker is running on
+- execute something on a remote machine via ssh
+- run a chef/puppet/fabric recipe or ansible playbook
+- run a bash script
+- send an SMS via twillio
+- send a text message to telegram
+- flip a switch (0/1 flipflops)
+- start/stop/restart a service
+- kill a process
+- chain requests by writing to another trigger file (this is fun)
+- ...
+
+you name it. As you can see the job of a plugin is to make our life easier and serve us with mostly things that can be automated or are needed on-demand. You can write your own plugins or search for existing plugins on the marketplace (more about that below).
+
 Core Plugins
 ############
 

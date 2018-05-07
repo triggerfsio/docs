@@ -3,38 +3,49 @@ Introduction
 
 .. attention::
 
-   triggerFS is in beta-testing right now. The pricing plan is disabled and all signups are made with the free-tier with **no limitations** and **all features enabled**. Enjoy!
+   triggerFS has been launched and is now available with all features enabled. This means that all signups are made with the free-tier with **no limitations** and **all features enabled**. Enjoy!
 
 Welcome to triggerFS
 --------------------
 
-triggerFS is a distributed, realtime message passing and trigger system. triggerFS enables you to build distributed systems and do realtime messaging in a service-oriented fashion. It is made up of four modules:
+triggerFS is a distributed, realtime message passing and trigger system. triggerFS enables you to build distributed systems and do realtime messaging in a service-oriented fashion.
+
+It is made up of four modules:
 
 - worker
 - cli
 - client
 - fs
 
-Each one of these modules play a key role in your triggerFS environment.
+Features
+--------
 
-Media
------
+* firewall-friendly (only outbound connections being made by workers)
+* build lambda functions on your own servers
+* build a network of workers and services
+* make use of various plugins
+* fast, reliable and service-oriented networking
+* high-speed, low latency and asynchronous messaging
+* realtime stdout output
+* cluster-enabled services
+* different message passing algorithms on services: roundrobin, serial, mirror (parallel)
+* messaging via regular files with the ``fs`` module (triggers)
+* the ``fs`` module is available on every device (distributed, synced FUSE filesystem)
+* write your own plugin
+* invite others to your team and share resources with each other
+* join other teams and share resources with each other
+* make services public so everybody can use them
 
-.. raw:: html
+How it works
+------------
 
-    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-        <iframe src="https://www.youtube.com/embed/vvfowPHD_7s" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-    </div>
+You deploy the worker module on your servers and make a request with the client module. The worker will take that request, pass it to a plugin and send the output back to the client. By specifying the plugin on the client-side
+you can control what plugin shall be used by the worker. You can then go ahead and group all workers by binding them to services.
 
+These services act like a proxy to your workers and enable you to do the client requests in a load-balanced, serial or parallelized way. Services guarantee high-availability by doing a fail-over to other available workers in a group
+if one or more workers should fail within that group.
 
-Modules
-#######
-
-worker
-------
-A worker is or has a service and receives messages (requests) from one or more clients in a safe and concurrent way and executes them by using a plugin. Deploy a worker to a bunch of servers and connect them together, build a network of services for high-speed messaging, to distribute workload or create clusters or groups of workers.
-
-A plugin is a tiny binary (written and compiled in go) which does one thing and does it well. A plugin could be anything:
+Here is a small list of things a plugin can do:
 
 - compute something
 - filter, grep, grok, sort or manipulate data
@@ -56,9 +67,37 @@ A plugin is a tiny binary (written and compiled in go) which does one thing and 
 - chain requests by writing to another trigger file (this is fun)
 - ...
 
-you name it. As you can see the job of a plugin is to make our life easier and serve us with mostly things that can be automated or are needed on-demand. You can write your own plugins or search for existing plugins on the marketplace (more about that below).
+To learn more about Plugins please have a look at `Plugins <plugins.html#plugins>`_.
 
-Every worker has an identity and a token to authenticate against the broker.
+Roadmap
+-------
+
+* marketplace api for the plugin ecosystem
+* marketplace web UI
+* marketplace integration into ``cli`` module
+* streaming services for the ``worker`` module (long-running plugins/services)
+* listening feature for the ``client`` module (for streaming services)
+* service broadcasting feature
+* HTTP/broker gateway for making requests via HTTP
+* periodic tasks via HTTP/db
+* team mailboxes in ``cli`` for notifications from broker and triggerfs.io
+* log tables for storing output of plugins. (history of stdouts)
+* encrypted communication (messaging) channels (no content encryption)
+* and much more...
+
+
+Modules
+#######
+
+worker
+------
+A worker is or has a service and receives messages (requests) from one or more clients in a safe and concurrent way and executes them by using a plugin.
+Deploy a worker to a bunch of servers and connect them together, build a network of services for high-speed messaging, to distribute workload or create clusters or groups of workers.
+
+Every worker has an identity and a token to authenticate against the broker. A worker can be attached to a service. If more than one worker is attached to the same service, the service acts as a load-balancer.
+
+You can specify other algorithms beside load-balacing. Eg. serial (distribution of tasks to workers in order) or mirror (parallelized execution of a task on all workers behind that service).
+
 
 .. note::
 
@@ -160,42 +199,6 @@ Maintenances
 If triggerfs.io schedules maintenances and/or the broker has to be shut down, all workers/services will automatically get notified and will reconnect as soon as the broker is up and running again.
 
 In the future we will also notify the team with a notification message to their mailboxes (future feature), which they can access within their ``cli``.
-
-
-Features
-########
-
-* firewall-friendly (only outbound connections being made by workers)
-* build lambda functions on your own servers
-* build a network of workers and services
-* make use of various plugins
-* fast, reliable and service-oriented networking
-* high-speed, low latency and asynchronous messaging
-* realtime stdout output
-* cluster-enabled services
-* different message passing algorithms on services: roundrobin, serial, mirror (parallel)
-* messaging via regular files with the ``fs`` module (triggers)
-* the ``fs`` module is available on every device (distributed, synced FUSE filesystem)
-* write your own plugin
-* invite others to your team and share resources with each other
-* join other teams and share resources with each other
-* make services public so everybody can use them
-
-Roadmap
-#######
-
-* marketplace api for the plugin ecosystem
-* marketplace web UI
-* marketplace integration into ``cli`` module
-* streaming services for the ``worker`` module (long-running plugins/services)
-* listening feature for the ``client`` module (for streaming services)
-* service broadcasting feature
-* HTTP/broker gateway for making requests via HTTP
-* periodic tasks via HTTP/db
-* team mailboxes in ``cli`` for notifications from broker and triggerfs.io
-* log tables for storing output of plugins. (history of stdouts)
-* encrypted communication (messaging) channels (no content encryption)
-* and much more...
 
 
 Pricing

@@ -1,7 +1,16 @@
-Pre-requirements
+All-In-One-Installer
+####################
+.. note::
+
+   Signup in less than a minute. Download all modules directly with the installer and set up your first network in less than 4 minutes.
+
+For a complete setup of your triggerFS you need to sign up and create a team. Let's go!
+
+
+Pre-Requirements
 ################
 
-Despite of triggerFS being a SaaS application. It comes without a website or SPA (Single Page Application) like most SaaS do.
+Despite of triggerFS being a SaaS application it comes without a website or SPA (Single Page Application) like most SaaS do.
 Instead, the whole application is based on cli. So it was only right to continue with this philosophy and implement the Sign-Up process
 into a cli installer. That is why triggerFS comes with a cli based installer. 
 
@@ -99,3 +108,5 @@ Replace your credentials in the main section of the configuration file:
    ### MAIN SECTION END
 
 We will mention the configuration file a few more times in the Configuration section of this documentation.
+
+Wasn't that easy? Now you are ready to go. Go into your ``triggerfs-cli`` now and start configuring your first worker.

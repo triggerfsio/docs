@@ -1,6 +1,11 @@
-=======================
-Configuration & Modules
-=======================
+===========
+Get Started
+===========
+
+.. note::
+
+   Here we will show how you can start with triggerFS in less than 4 minutes. We will create a `worker`, attach it to the `service`, make a request with the ``triggerfs-client`` and do the same request with the ``triggerfs`` module.
+   We will use the `command` plugin in this tutorial.
 
 We will start with the cli module since we have nothing configured to run the other modules. Everything configuration happens in the cli.
 
