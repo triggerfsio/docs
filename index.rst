@@ -3,6 +3,18 @@
 .. image:: _static/img/triggerfs_logo.jpg
 
 
+TL;DR
+#####
+
+Imagine you could deploy your own customized services onto any server and map the API requests to it into regular files on your filesystem.
+Imagine you could build a network of workers which you can do socket communication with via files.
+Imagine you have a server out there which can make use of tons of plugins written in go and be able to do any kind of job and make requests to them in a service-oriented way.
+Imagine how basically all applications able to write to a file could magically call all of your services and trigger something.
+
+This is triggerFS. A ``triggerfs-worker`` running on a server, waiting for requests and ready to process them with the help of `plugins`.
+Now from anywhere you can make those requests either by executing the ``triggerfs-client`` or by writing to regular files on your filesystem mounted anywhere with the help of the ``triggerfs`` module.
+
+
 Why triggerFS?
 ##############
 
