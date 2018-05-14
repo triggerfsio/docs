@@ -15,6 +15,11 @@ This is triggerFS. A ``triggerfs-worker`` running on a server, waiting for reque
 Now from anywhere you can make those requests either by executing the ``triggerfs-client`` or by writing to regular files on your filesystem mounted anywhere with the help of the ``triggerfs`` module.
 
 
+Diagram
+#######
+.. image:: _static/img/diagram.png
+
+
 Why triggerFS?
 ##############
 
