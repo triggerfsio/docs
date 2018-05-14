@@ -14,6 +14,7 @@ Imagine how basically all applications able to write to a file could magically c
 This is triggerFS. A ``triggerfs-worker`` running on a server, waiting for requests and ready to process them with the help of `plugins`.
 Now from anywhere you can make those requests either by executing the ``triggerfs-client`` or by writing to regular files on your filesystem mounted anywhere with the help of the ``triggerfs`` module.
 
+Check out our `Use Cases <usecases_examples.html#use-cases>`_ page to get a short overview what triggerFS is capable of.
 
 Diagram
 #######
